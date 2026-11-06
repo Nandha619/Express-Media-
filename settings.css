@@ -90,14 +90,74 @@ html.m-settings .tabs button.on { background: var(--s-acc); color: var(--s-on); 
 html.m-settings .bar { height: 10px; border-radius: 99px; background: var(--s-line); overflow: hidden; }
 html.m-settings .bar > div { height: 100%; background: var(--s-acc); }
 
-/* ---------- முன்னோட்டம் (சிறிய) ---------- */
-html.m-settings .stage { position: static !important; background: var(--s-card); border: 1px solid var(--s-line); border-radius: 16px; padding: 12px; display: grid; gap: 10px; justify-items: center; }
-html.m-settings .stage canvas { width: min(100%, 220px); max-height: none; border-radius: 10px; }
-html.m-settings .phone { width: min(100%, 220px) !important; border-radius: 16px; box-shadow: 0 6px 18px rgba(0, 0, 0, .2); }
-html.m-settings .player, html.m-settings .row2 { width: min(100%, 320px); }
-html.m-settings .exp video { width: min(100%, 220px); }
+/* ---------- முன்னோட்டம் (மொபைல் எடிட் — முழு 9:16, அரை காட்சி வெட்டாது) ---------- */
+html.m-settings .stage {
+  position: static !important;
+  background: var(--s-card);
+  border: 1px solid var(--s-line);
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  overflow: visible;
+}
+/* மொபைலில் முழு போன் அளவு; பெரிய திரையில் நடுவில் 9:16 சட்டம் */
+html.m-settings .stage canvas {
+  width: min(100%, 360px, calc((100dvh - 180px) * 9 / 16), calc(100vw - 48px)) !important;
+  height: auto !important;
+  aspect-ratio: 9 / 16 !important;
+  max-height: none !important;
+  border-radius: 14px;
+  display: block;
+  background: #101010;
+}
+html.m-settings .phone {
+  width: min(100%, 360px, calc((100dvh - 180px) * 9 / 16), calc(100vw - 48px)) !important;
+  max-width: 100% !important;
+  aspect-ratio: 9 / 16 !important;
+  height: auto !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+  background: #0A0D2E;
+}
+html.m-settings .phone canvas {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  display: block;
+  object-fit: contain;
+}
+html.m-settings .player,
+html.m-settings .row2 {
+  width: min(100%, 360px);
+}
+html.m-settings .exp video {
+  width: min(100%, 360px);
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
+  border-radius: 14px;
+}
 html.m-settings .exp { order: 0 !important; }
 html.m-settings #appThemes, html.m-settings .at-row { display: none !important; }
+
+/* மொபைல்: முன்னோட்டம் மேலே ஒட்டி, கீழே எடிட் பலகைகள் ஸ்க்ரோல் */
+@media (max-width: 899px) {
+  html.m-settings .stage {
+    position: sticky !important;
+    top: 0;
+    z-index: 4;
+    padding: 10px 8px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  }
+  html.m-settings .stage canvas,
+  html.m-settings .phone {
+    width: min(100%, 320px, calc((100dvh - 220px) * 9 / 16)) !important;
+  }
+}
 
 /* ---------- settings.html தலைப்புப் பட்டை + தாவல்கள் ---------- */
 .st-page { margin: 0; background: var(--s-bg); color: var(--s-fg); font: 500 15px/1.55 "Noto Sans Tamil", "Latha", "Nirmala UI", system-ui, sans-serif; }

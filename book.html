@@ -116,6 +116,10 @@ html.m-view body{padding:58px 0 0!important}
 html.m-view .shell{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
 html.m-view .stage{position:static!important}
 html.m-view .phone{width:min(100%,400px,calc((100vh - 76px)*9/16))!important}
+/* settings: முழு 9:16 — அரை காட்சி வெட்டாது */
+html.m-settings .phone{width:min(100%,360px,calc((100dvh - 180px)*9/16))!important;aspect-ratio:9/16!important;height:auto!important;overflow:hidden!important}
+html.m-settings .phone canvas{width:100%!important;height:100%!important;object-fit:contain}
+html.m-settings .stage{overflow:visible!important}
 </style>
 
 <div class="wrap">

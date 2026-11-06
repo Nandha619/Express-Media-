@@ -139,8 +139,14 @@ html,body{margin:0}
     });
   }
   function fitFrames() {
-    var h = Math.max(240, innerHeight - $('#top').offsetHeight - ($('#subtabs').offsetHeight || 0));
-    [].forEach.call(document.querySelectorAll('.st-pane > iframe, .st-sub > iframe'), function (f) { f.style.height = h + 'px'; });
+    /* மொபைல் எடிட்: முழு 9:16 முன்னோட்டம் + எடிட் பலகைக்கு போதுமான உயரம் */
+    var topH = ($('#top') && $('#top').offsetHeight) || 0;
+    var subH = ($('#subtabs') && $('#subtabs').offsetHeight) || 0;
+    var h = Math.max(520, innerHeight - topH - subH);
+    [].forEach.call(document.querySelectorAll('.st-pane > iframe, .st-sub > iframe'), function (f) {
+      f.style.height = h + 'px';
+      f.style.minHeight = '520px';
+    });
   }
   function openSub(k) {
     sub = SUBS.indexOf(k) >= 0 ? k : 'books';
