@@ -95,12 +95,14 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
 <main>
 <div class="stage"><canvas id="cv" width="1080" height="1920"></canvas>
 <div id="tl">
-  <div class="tl-row"><button id="tlPlay" type="button" class="alt">▶</button><span id="tlT">0:00 / 0:30</span><span class="tl-sp"></span><button id="tlAdd" type="button">＋ புரோமோ</button></div>
-  <div id="tlAll" aria-label="எல்லாச் செய்திகள்"></div>
+  <div class="tl-row"><button id="tlPlay" type="button" class="alt">▶</button><span id="tlT">0:00 / 3:00</span><span class="tl-sp"></span><button id="tlAdd" type="button">＋ மாற்றப் புள்ளி</button></div>
+  <div id="tlAll" aria-label="மாற்றப் புள்ளிகள்"></div>
   <div id="tlTrack" aria-label="நேரக்கோடு"><div id="tlHead"></div></div>
-  <small class="tl-lg">தங்கம் = நீங்கள் வைத்த புரோமோ (இழுத்து நகர்த்தலாம்; தட்டினால் நேரம் / சொல்) · வெள்ளை = தானியங்கி (தட்டினால் நீங்களே நகர்த்தலாம்) · கோட்டில் தொட்டால் அந்த நேரத்துக்குச் செல்லும்</small>
+  <small class="tl-lg">தங்கம் = மாற்றப் புள்ளி (இழுத்து நகர்த்தலாம்) · தட்டினால் நேரம் / புரோமோ சொல் / தலைப்பு / caption மாற்றலாம் · ஒரே 180 வினாடி வீடியோவில் 10 இடம் வரை</small>
   <div id="tlPop" hidden>
-    <div class="tl-pr"><label>⏱ நேரம் (வினாடி அல்லது நிமி:வினாடி)<input id="tpT" inputmode="decimal"></label><label>🏷 இந்தப் புள்ளியின் சொல் (காலியாக = முக்கிய சொல்)<input id="tpW"></label></div>
+    <div class="tl-pr"><label>⏱ நேரம்<input id="tpT" inputmode="decimal"></label><label>🏷 புரோமோ சொல்<input id="tpW" placeholder="BREAKING NEWS"></label></div>
+    <label>📰 இந்த நேரத்திலிருந்து தலைப்பு<textarea id="tpH" rows="2" placeholder="புதிய தலைப்பு"></textarea></label>
+    <label>📝 இந்த நேரத்திலிருந்து caption<textarea id="tpS" rows="2" placeholder="புதிய caption / ஸ்கிரிப்ட்"></textarea></label>
     <div class="tl-row"><button id="tpGo" type="button" class="alt">▶ பார்</button><button id="tpDel" type="button" class="alt">🗑 நீக்கு</button><span class="tl-sp"></span><button id="tpOk" type="button">✔ முடிந்தது</button></div>
   </div>
 </div></div>
@@ -117,7 +119,7 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
   <div class="bar" aria-hidden="true"><div id="xProg"></div></div>
   <div class="row"><button id="xCancel" class="gold" hidden>நிறுத்து</button></div>
   <section class="ess" id="essBox">
-    <h3>📝 தினசரி — முக்கியமானவை மட்டும்</h3>
+    <h3>📝 ஒரே வீடியோ — 180 வினாடி · 10 மாற்றப் புள்ளிகள்</h3>
   <div class="tabs" id="tabs"></div>
   <div class="row">
     <button class="alt" id="bAdd">＋ புதிய செய்தி</button>
@@ -133,7 +135,11 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
     <label>வீடியோக்கள் / படங்கள் (ஒன்றுக்கு மேல் தேர்வு செய்யலாம்)<input type="file" id="fMedia" accept="video/*,image/*" multiple><small id="mInfo"></small></label>
     <label style="flex:0 0 150px">BREAKING<input type="checkbox" data-k="breaking" style="width:28px;height:28px"></label>
   </div>
-  <label>⏱ இந்தச் செய்தியின் நீளம் (தொகுப்பு முறையில்; வினாடி)<select data-k="len"><option value="20">20 வினாடி</option><option value="30">30 வினாடி</option><option value="40">40 வினாடி</option><option value="50">50 வினாடி</option><option value="60">60 வினாடி</option></select></label>
+  <small style="background:var(--in);padding:10px 12px;border-radius:10px;border:1px solid var(--line)">
+    <b>ஒரே MP4 · 180 வினாடி (3 நிமிடம்)</b><br>
+    நேரக்கோட்டில் <b>＋ மாற்றப் புள்ளி</b> அழுத்தி 10 இடங்களில் புரோமோ + தலைப்பு + caption அமைக்கவும்.
+    அல்லது கீழே «10 புள்ளிகள் தானியங்கி» அழுத்தவும்.
+  </small>
     <label>🏷 முக்கிய சொல் (BREAKING NEWS / JUST IN / முக்கிய செய்தி…) — இங்கே மாற்றினால் புரோமோ, டிக்கர் பேட்ஜ், BREAKING பட்டை எல்லாவற்றிலும் மாறும்<input id="gLabel" placeholder="BREAKING NEWS"></label>
   </section>
   <details class="sub" id="subPromo">
@@ -141,7 +147,7 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
     <div class="subb">
       <div class="row" style="align-items:center;flex-wrap:wrap;gap:14px"><label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gPrOn" style="width:auto"> 🎬 வீடியோ மேல் புரோமோ அனிமேஷன்</label></div>
 <div class="row"><label>புரோமோ பாணி<select id="gPrStyle"><option value="full">முழுக் கட்டம் (சேனல் இடைவேளை)</option><option value="band">நடுப் பட்டை</option></select></label><label>எத்தனை வினாடி தெரியும்<input id="gPrDur" type="number" min="2" max="10"></label></div>
-<small>📍 வீடியோ முன்னோட்டத்தின் கீழே உள்ள நேரக்கோட்டில் புரோமோ தேவையான இடத்தில் “＋ புரோமோ” அழுத்துங்கள். அது அந்த நேரத்தில் பாப்-அப் ஆக வரும்; தங்க நிறப் பட்டையை இழுத்து நகர்த்தலாம், தட்டினால் நேரம் / சொல்லை மாற்றலாம்.</small>
+<small>📍 ஒரே 180 வினாடி வீடியோவில் நேரக்கோட்டில் <b>＋ மாற்றப் புள்ளி</b> (அல்லது «10 புள்ளிகள் தானியங்கி»). ஒவ்வொரு புள்ளியிலும் <b>புரோமோ சொல் + தலைப்பு + caption</b> அமைக்கவும் — அந்த நேரத்திலிருந்து திரையில் மாறும்.</small>
 <details class="in"><summary>⌨ எண்ணாகவும் வார்த்தையாகவும் அமைக்க (மேம்பட்டது)</summary><div class="subb">
   <label>🎬 வீடியோ புரோமோ எழுத்து (இந்தச் செய்திக்கு; காலியாக விட்டால் இயல்புநிலை வரும்; பல வார்த்தைகளை | கொண்டு பிரிக்கவும்)<input data-k="promo" placeholder="BREAKING NEWS | JUST IN | NEWS UPDATE"></label>
   <label>⏱ புரோமோ வரும் நேரங்கள் (வினாடி அல்லது நிமிடம்:வினாடி; காற்புள்ளியால் பிரிக்கவும், எ.கா: 10, 25, 1:05; காலியாக விட்டால் இடைவெளி முறை)<input data-k="promoAt" placeholder="10, 25, 1:05" inputmode="text"></label><small id="promoAtInfo"></small>
@@ -160,15 +166,17 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
 <details class="in"><summary>துல்லிய அமைப்பு (ஸ்லைடர்)</summary><div class="subb"><label>🔍 Zoom (பெரிதாக்கு)<input type="range" data-k="zoom" min="1" max="4" step="0.01" value="1"></label><div class="row"><label>↔ இடது–வலது<input type="range" data-k="px" min="-540" max="540" step="2" value="0"></label><label>↕ மேல்–கீழ்<input type="range" data-k="py" min="-600" max="600" step="2" value="0"></label></div></div></details>
     </div>
   </details>
-  <details class="sub" id="subCombo">
-    <summary>🎞 தொகுப்பு வீடியோ — Top 10 <small>ஒரே வீடியோ · அதிகபட்சம் 3 நிமிடம்</small></summary>
+  <details class="sub" id="subCombo" open>
+    <summary>⏱ 10 மாற்றப் புள்ளிகள் · 180 வினாடி <small>ஒரே வீடியோ</small></summary>
     <div class="subb">
-      <label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gCombo" style="width:auto"> தொகுப்பு முறை: ஒவ்வொரு செய்தியும் தன் நீளம் ஓடி, முடிவில் புரோமோ வரும்; End card கடைசியில் மட்டும்</label>
-      <div class="row"><label>தொடக்க செய்தி எண் (part 2-க்கு 7 போன்ற எண் கொடுக்கவும்)<input id="gFrom" type="number" min="1" max="10"></label></div>
-      <small id="cInfo"></small>
-      <div class="row"><button class="alt" id="bTpl" type="button">⭐ இந்த அமைப்பை இயல்பு அமைப்பாக சேமி</button><button class="alt" id="bTplRst" type="button">↺ இந்தச் செய்தியை இயல்புக்கு மீட்டமை</button></div>
-      <small>புதிய செய்தி சேர்க்கும்போது எழுத்து (தலைப்பு / ஸ்கிரிப்ட்) காலியாகவும், மற்றவை (நீளம், BREAKING, புரோமோ எழுத்து, zoom) இயல்பு அமைப்பிலிருந்தும் தொடங்கும். முதல் செய்தியின் அமைப்பு தானாகவே இயல்பு அமைப்பாகச் சேமிக்கப்பட்டிருக்கும்.</small>
-      <div class="row"><button class="alt" id="bCP" type="button">▶ தொகுப்பு முன்னோட்டம்</button><button class="gold" id="bCombo" type="button">🎞 MP4 உருவாக்கு (தொகுப்பு)</button></div>
+      <label>வீடியோ நீளம் (வினாடி)<input id="gDurQuick" type="number" min="30" max="180" value="180"></label>
+      <small id="cInfo">ஒரே 180 வினாடி MP4. நேரக்கோட்டில் 10 இடங்களில் புரோமோ + தலைப்பு + caption மாற்றவும்.</small>
+      <div class="row">
+        <button class="gold" id="bFit10" type="button">⚡ 10 புள்ளிகள் தானியங்கி (0, 18, 36…162 வி)</button>
+      </div>
+      <small>ஒவ்வொரு புள்ளியிலும்: <b>புரோமோ சொல்</b> + <b>தலைப்பு</b> + <b>caption</b>. அந்த நேரத்திலிருந்து திரையில் தலைப்பு/caption மாறும்; புரோமோ அனிமேஷன் அங்கே வரும்.</small>
+      <div class="row"><button class="alt" id="bTpl" type="button">⭐ இயல்பு அமைப்பாக சேமி</button><button class="alt" id="bTplRst" type="button">↺ மீட்டமை</button></div>
+      <div class="row" style="display:none"><input type="checkbox" id="gCombo"><input id="gFrom" type="number" value="1"><button id="bCP" type="button"></button><button id="bCombo" type="button"></button></div>
     </div>
   </details>
   <details class="sub" id="subWm">
@@ -254,13 +262,16 @@ const $=s=>document.querySelector(s);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return p(d.getDate())+"-"+p(d.getMonth()+1)+"-"+d.getFullYear()};
 const blank=()=>({headline:"சென்னையில் கனமழை தொடரும்\nமக்கள் எச்சரிக்கையுடன் இருக்க வேண்டும்",loc:"சென்னை",date:today(),script:"சென்னை மற்றும் புறநகர் பகுதிகளில் கடந்த 12 மணி நேரமாக தொடரும் *கனமழையால்* சில தாழ்வான பகுதிகளில் நீர் தேங்கியுள்ளது. மக்கள் தேவையில்லாமல் *வெளியே செல்ல வேண்டாம்* என மாவட்ட நிர்வாகம் எச்சரிக்கை விடுத்துள்ளது.",ticker:"சென்னையில் கனமழை தொடரும் | பள்ளிகளுக்கு இன்று விடுமுறை",breaking:true});
 const FL=[["gBrk","brk"],["gTk1","tk1"],["gTk2","tk2"],["gEnd","end"],["gThx","thx"],["gWm","wm"],["gCt","ct"],["gPh","ph"]];
-let G={name:"தீக்கதிர்",sub:"Mobile TV",dur:90,slide:3,brk:"BREAKING NEWS",tk1:"BREAKING",tk2:"NEWS",end:"ஊடக உலகின் உண்மை போராளி",thx:"நன்றி · தொடர்ந்து இணைந்திருங்கள்",wm:"#Theekathir",ct:"செய்தி & விளம்பர தொடர்புக்கு",ph:"98XXX XXXXX"},items=[blank()],cur=0,media={},logoImg=null;
+let G={name:"தீக்கதிர்",sub:"Mobile TV",dur:180,slide:3,combo:false,prDur:3,prOn:true,prEvery:18,brk:"BREAKING NEWS",tk1:"BREAKING",tk2:"NEWS",end:"ஊடக உலகின் உண்மை போராளி",thx:"நன்றி · தொடர்ந்து இணைந்திருங்கள்",wm:"#Theekathir",ct:"செய்தி & விளம்பர தொடர்புக்கு",ph:"98XXX XXXXX"},items=[blank()],cur=0,media={},logoImg=null;
 try{const s=JSON.parse(localStorage.getItem("tk_studio2")||"null");if(s&&s.items&&s.items.length){G=Object.assign(G,s.G);items=s.items}}catch(e){}
-if(!G.v3){G.dur=90;G.v3=1}if(!G.v4){G.ct="செய்தி & விளம்பர தொடர்புக்கு";G.v4=1}items.forEach(x=>{if(!x.dm)x.date=today()});
-/* முதல் செய்தியின் அமைப்பு தானாகவே "இயல்பு அமைப்பு"-ஆக சேமிக்கப்படும் (G.tpl); புதிய செய்தி எப்போதும் இதிலிருந்தே தொடங்கும் */
-if(!G.tpl){const f=items[0]||{};G.tpl={breaking:f.breaking!==false,promo:f.promo||"",len:+f.len||30}}
-items.forEach(x=>{if(!x.len)x.len=G.tpl.len||30});
-const tplSt=()=>({breaking:G.tpl.breaking,promo:G.tpl.promo,len:G.tpl.len,zoom:1,px:0,py:0});
+if(!G.v3){G.dur=90;G.v3=1}if(!G.v4){G.ct="செய்தி & விளம்பர தொடர்புக்கு";G.v4=1}
+/* v6: ஒரே 180 வினாடி வீடியோ · 10 மாற்றப் புள்ளிகள் (தொகுப்பு அல்ல) */
+if(!G.v6){G.combo=false;G.dur=180;G.prDur=G.prDur||3;G.prOn=true;G.prEvery=18;G.v6=1}
+items.forEach(x=>{if(!x.dm)x.date=today()});
+if(!G.tpl){const f=items[0]||{};G.tpl={breaking:f.breaking!==false,promo:f.promo||"",len:+f.len||180}}
+if(!G.tpl.len)G.tpl.len=180;
+items.forEach(x=>{if(!x.len)x.len=G.tpl.len||180});
+const tplSt=()=>({breaking:G.tpl.breaking,promo:G.tpl.promo||"",len:+G.tpl.len||180,zoom:1,px:0,py:0});
 const save=()=>{try{localStorage.setItem("tk_studio2",JSON.stringify({G,items}))}catch(e){}};
 function setLogo(u){const im=new Image();im.onload=()=>{logoImg=im};im.src=u}
 try{const l=localStorage.getItem("tk_logo");if(l)setLogo(l)}catch(e){}
@@ -299,9 +310,29 @@ const segLen=it=>{const k=(it.script||"")+"|"+(+it.len||30);let c=_sm.get(it);if
 /* G.cFrom-ஆம் செய்தியிலிருந்து தொடங்கி, 180 வினாடிக்குள் (End card உட்பட) எத்தனை செய்தி அடங்கும் என்று கணக்கிடும் */
 const comboRange=()=>{const a=clamp((+G.cFrom||1)-1,0,items.length-1);let b=a,body=segLen(items[a]);for(let k=a+1;k<items.length;k++){const n=body+segLen(items[k]);if(n+EC>180)break;body=n;b=k}return{a,b,tot:Math.min(180,body+EC)}};
 const lastSeg=it=>items[comboRange().b]===it;
-const durOf=it=>G.combo?Math.min(180,segLen(it)+(lastSeg(it)?EC:0)):Math.min(180,Math.max(G.dur,2+scriptPages(it.script).np*6+EC+.4));
-function draw(it,t){
-  const D=durOf(it),a=(s,d)=>ease((t-s)/d),C=(s)=>{ctx.textAlign=s?"center":"left"};
+const durOf=it=>G.combo?Math.min(180,segLen(it)+(lastSeg(it)?EC:0)):Math.min(180,Math.max(+G.dur||180,30));
+/* ---------- 10 மாற்றப் புள்ளிகள்: நேரம் → தலைப்பு + caption + புரோமோ ---------- */
+function getCues(it){
+  const rnd=x=>Math.round((+x||0)*10)/10;
+  if(Array.isArray(it.cues)&&it.cues.length){
+    return it.cues.map(c=>({t:rnd(c.t),w:(c.w&&c.w!=="")?c.w:"@",headline:c.headline||"",script:c.script||""})).sort((a,b)=>a.t-b.t);
+  }
+  const raw=(it.promoAt||"").trim(),ts=[];
+  if(raw)raw.split(/[,;\s]+/).forEach(x=>{if(!x)return;let v=null;const m=x.match(/^(\d+):(\d{1,2})$/);if(m)v=+m[1]*60+(+m[2]);else if(/^\d+(\.\d+)?$/.test(x))v=+x;if(v!=null&&isFinite(v)&&v>=0)ts.push(rnd(v))});
+  const tk=(it.promo||"").trim()?it.promo.split("|").map(x=>x.trim()):[];
+  if(ts.length){
+    return[{t:0,w:"@",headline:it.headline||"",script:it.script||""}].concat(ts.map((t,i)=>({t,w:tk[i]||"@",headline:"",script:""})));
+  }
+  return[{t:0,w:"@",headline:it.headline||"",script:it.script||""}];
+}
+function viewAt(it,t){
+  const cues=getCues(it);let h=it.headline||"",s=it.script||"",w="@";
+  for(let i=0;i<cues.length;i++){const c=cues[i];if(c.t>t+.05)break;if(c.headline)h=c.headline;if(c.script)s=c.script;w=c.w||w}
+  return Object.assign({},it,{headline:h,script:s,_cueW:w});
+}
+function draw(it0,t){
+  const it=viewAt(it0,t);
+  const D=durOf(it0),a=(s,d)=>ease((t-s)/d),C=(s)=>{ctx.textAlign=s?"center":"left"};
   ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.textBaseline="alphabetic";ctx.textAlign="left";ctx.shadowBlur=0;
   ctx.fillStyle="#0a0a0a";ctx.fillRect(0,0,W,H);
   const pu=.1+.04*Math.sin(t*1.5);ctx.fillStyle=PAGE;ctx.fillRect(0,0,W,H);
@@ -501,7 +532,20 @@ function FRAMEFX(it,t,fx,fy,fw,fh){
 /* ---------- வீடியோ மேல் புரோமோ அனிமேஷன் (திரை முன்னோட்டம் + MP4 ரெண்டர் இரண்டிலும் ஒரே குறியீடு) ----------
    ஒவ்வொரு G.prEvery வினாடிக்கும் (30, 60, 90…) வீடியோ கட்டத்திற்குள் வெடித்து வந்து, G.prDur வினாடி தெரிந்து மறையும்.
    வீடியோ பின்னால் தொடர்ந்து ஓடும். நிறங்கள்: RED / YEL (தீம் மாற்றினால் தானாக மாறும்). */
-function promoWords(it){const lab=G.prDef==null?"BREAKING NEWS":G.prDef,raw=(it.promo&&it.promo.trim())?it.promo:lab;return raw.split("|").map(s=>s.trim()).map(s=>s==="@"?lab:s).filter(Boolean)}
+/* புரோமோ எழுத்து: cues-இல் உள்ள சொல் / தலைப்பு; இல்லையெனில் இயல்பு */
+function promoWords(it){
+  const lab=G.prDef==null?"BREAKING NEWS":G.prDef;
+  const cues=getCues(it).filter(c=>c.t>0.05);
+  if(cues.length){
+    return cues.map(c=>{
+      if(c.w&&c.w!=="@")return c.w;
+      const title=((c.headline||"").split("\n")[0]||"").replace(/\*/g,"").trim();
+      return title||lab;
+    });
+  }
+  if(it.promo&&it.promo.trim())return it.promo.split("|").map(s=>s.trim()).map(s=>s==="@"?lab:s).filter(Boolean);
+  return[lab];
+}
 /* புரோமோ நேரங்கள்: நீங்கள் கொடுத்த நேரங்கள் (promoAt) இருந்தால் அவை மட்டும்; இல்லையெனில் G.prEvery இடைவெளி */
 function promoTimes(it){
   const raw=(it.promoAt||"").trim();if(!raw)return null;const out=[];
@@ -543,15 +587,17 @@ function promoBand(text,u,DU,fx,fy,fw,fh){
     ctx.restore();
     ctx.strokeStyle=YEL;ctx.lineWidth=4;ctx.globalAlpha=.9;par(a,b,y0,y1);ctx.stroke();ctx.globalAlpha=1;
   }
-  /* எழுத்து */
+  /* எழுத்து — தலைப்பு (+ caption சிறியதாக) */
   const tp=ease((u-.28)/.35),ta=tp*(1-po);
   if(ta>.01){
-    const s=shrink(text,fw-190,86,"800 italic"),sc=.78+.22*tp+.07*Math.sin(Math.PI*tp)+.012*Math.sin(u*9)*tp,cx=fx+fw/2-sk/2;
+    const parts=String(text||"").split("\n"),title=parts[0]||"",cap=(parts.slice(1).join(" ")||"").trim();
+    const s=shrink(title,fw-190,cap?64:86,"800 italic"),sc=.78+.22*tp+.07*Math.sin(Math.PI*tp)+.012*Math.sin(u*9)*tp,cx=fx+fw/2-sk/2;
     ctx.save();ctx.globalAlpha=ta;ctx.translate(cx,cy);ctx.scale(sc,sc);
     ctx.font=`800 italic ${s}px ${FONT}`;ctx.textAlign="center";
-    const tw=ctx.measureText(text).width,ty=s*.34;
-    ctx.lineJoin="round";ctx.lineWidth=7;ctx.strokeStyle="rgba(0,0,0,.4)";ctx.strokeText(text,0,ty);
-    ctx.fillStyle="#fff";ctx.fillText(text,0,ty);
+    const tw=ctx.measureText(title).width,ty=cap?-s*.1:s*.34;
+    ctx.lineJoin="round";ctx.lineWidth=7;ctx.strokeStyle="rgba(0,0,0,.4)";ctx.strokeText(title,0,ty);
+    ctx.fillStyle="#fff";ctx.fillText(title,0,ty);
+    if(cap){const cs=shrink(cap,fw-200,28,"700");ctx.font=`700 ${cs}px ${FONT}`;ctx.lineWidth=4;ctx.strokeText(cap,0,ty+s*.7);ctx.fillStyle="rgba(255,255,255,.95)";ctx.fillText(cap,0,ty+s*.7)}
     const pl=.55+.45*Math.sin(u*12);ctx.fillStyle=YEL;ctx.globalAlpha=ta*pl;
     [-1,1].forEach(d=>{ctx.beginPath();ctx.arc(d*(tw/2+34),0,10,0,7);ctx.fill()});
     ctx.restore();
@@ -587,16 +633,22 @@ function promoFull(text,u,DU,fx,fy,fw,fh){
     const sh=(u-hold0-.55)/.9;if(sh>0&&sh<1){const sx=fx-200+sh*(fw+400);ctx.fillStyle="rgba(255,255,255,.2)";poly([[sx,y0],[sx+110,y0],[sx+110-sk,y1],[sx-sk,y1]]);ctx.fill()}
     ctx.restore();
   }
-  /* உள்ளடக்கம் */
+  /* உள்ளடக்கம் — தலைப்பு + caption (\\n பிரிப்பு) */
   const tp=ease((u-hold0+.1)/.4),ca=tp*(1-ease((u-(hold1-.12))/.26));
   if(ca>.01){
-    const s=shrink(text,fw-150,128,"800 italic"),sc=.7+.3*tp+.06*Math.sin(Math.PI*tp)+.01*Math.sin(u*8)*tp,ty=s*.3;
+    const parts=String(text||"").split("\n"),title=parts[0]||"",cap=(parts.slice(1).join(" ")||"").trim();
+    const s=shrink(title,fw-150,cap?96:128,"800 italic"),sc=.7+.3*tp+.06*Math.sin(Math.PI*tp)+.01*Math.sin(u*8)*tp,ty=cap?-s*.15:s*.3;
     ctx.save();ctx.globalAlpha=ca;ctx.translate(cx,cy+(1-tp)*40);ctx.scale(sc,sc);
     ctx.font=`800 italic ${s}px ${FONT}`;ctx.textAlign="center";
-    const tw=ctx.measureText(text).width;
-    ctx.shadowColor="rgba(0,0,0,.5)";ctx.shadowBlur=22;ctx.lineJoin="round";ctx.lineWidth=11;ctx.strokeStyle="rgba(0,0,0,.35)";ctx.strokeText(text,0,ty);
-    ctx.shadowBlur=0;ctx.fillStyle="#fff";ctx.fillText(text,0,ty);
-    const bw=tw*ease((u-hold0-.1)/.45);ctx.fillStyle=YEL;ctx.beginPath();ctx.roundRect(-bw/2,ty+24,bw,10,5);ctx.fill();
+    const tw=ctx.measureText(title).width;
+    ctx.shadowColor="rgba(0,0,0,.5)";ctx.shadowBlur=22;ctx.lineJoin="round";ctx.lineWidth=11;ctx.strokeStyle="rgba(0,0,0,.35)";ctx.strokeText(title,0,ty);
+    ctx.shadowBlur=0;ctx.fillStyle="#fff";ctx.fillText(title,0,ty);
+    if(cap){
+      const cs=shrink(cap,fw-180,42,"700");
+      ctx.font=`700 ${cs}px ${FONT}`;ctx.lineWidth=6;ctx.strokeStyle="rgba(0,0,0,.4)";ctx.strokeText(cap,0,ty+s*.85);
+      ctx.fillStyle="rgba(255,255,255,.95)";ctx.fillText(cap,0,ty+s*.85);
+    }
+    const bw=tw*ease((u-hold0-.1)/.45);ctx.fillStyle=YEL;ctx.beginPath();ctx.roundRect(-bw/2,ty+(cap?s*.95:24),bw,10,5);ctx.fill();
     /* சேனல் பெயர் பட்டம் */
     const nm=(G.name||"").trim();
     if(nm){ctx.font=`800 34px ${FONT}`;const pw=ctx.measureText(nm).width+86,ph=56,py=-s*.62-62;
@@ -703,12 +755,16 @@ function tabs(){["#tabs","#ctabs"].forEach(q=>{const t=$(q);t.innerHTML="";items
 function fill(){document.querySelectorAll("[data-k]").forEach(e=>{const v=items[cur][e.dataset.k];if(e.type==="checkbox")e.checked=!!v;else e.value=v==null?e.defaultValue:v});$("#gName").value=G.name;$("#gDur").value=G.dur;$("#gSub").value=G.sub;$("#gSl").value=G.slide;FL.forEach(([i,k])=>{$("#"+i).value=G[k]});wmFill();promoFill();comboFill();window.labelFill&&window.labelFill();$("#gSfx").checked=G.sfx!==false;$("#gTick").checked=!!G.tick;$("#gSfxP").checked=!!G.sfxp;fillCard()}
 function sel(i){cur=i;window._scrub=null;if(cardMode)getCard(items[i]);startT=performance.now();tabs();fill();playMedia()}
 function playMedia(){Object.values(media).forEach(L=>L.forEach(m=>{m.el._on=false;if(m.type==="v"){m.el.pause();m.el.playbackRate=1;m._pb=false}}))}
-document.querySelectorAll("[data-k]").forEach(e=>e.addEventListener("input",()=>{items[cur][e.dataset.k]=e.type==="checkbox"?e.checked:e.type==="range"?+e.value:e.value;if(e.dataset.k==="date")items[cur].dm=true;save()}));
+document.querySelectorAll("[data-k]").forEach(e=>e.addEventListener("input",()=>{
+  const it=items[cur],k=e.dataset.k,v=e.type==="checkbox"?e.checked:e.type==="range"?+e.value:e.value;
+  it[k]=v;if(k==="date")it.dm=true;
+  if(k==="headline"||k==="script"){const C=getCues(it);if(C[0]&&C[0].t===0){C[0][k]=v;it.cues=C}}
+  save()}));
 $("#gName").oninput=e=>{G.name=e.target.value;save()};
 $("#gSub").oninput=e=>{G.sub=e.target.value;save()};
 FL.forEach(([i,k])=>{$("#"+i).oninput=e=>{G[k]=e.target.value;save()}});
 $("#gSl").onchange=e=>{G.slide=clamp(+e.target.value||3,1,15);e.target.value=G.slide;save()};
-$("#gDur").onchange=e=>{G.dur=clamp(+e.target.value||12,6,180);e.target.value=G.dur;save()};
+$("#gDur").onchange=e=>{G.dur=clamp(+e.target.value||180,30,180);e.target.value=G.dur;const q=$("#gDurQuick");if(q)q.value=G.dur;save();comboInfo();render(true)};
 $("#fLogo").onchange=e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,500/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));c.getContext("2d").drawImage(im,0,0,c.width,c.height);let u=c.toDataURL("image/png");if(u.length>230000)u=c.toDataURL("image/webp",.9);setLogo(u);try{localStorage.setItem("tk_logo",u)}catch(x){}$("#st").textContent="✔ லோகோ சேமிக்கப்பட்டது."};im.src=fr.result};fr.readAsDataURL(f)};
 /* footage (வீடியோ / படம்) — செட்டிங் பக்கத்தில் சேர்த்தவை IndexedDB-ல் சேமிக்கப்பட்டு காட்சிப் பக்கத்திலும் தெரியும் */
 function addMedia(k,f,done){const u=URL.createObjectURL(f);media[k]=media[k]||[];if(f.type.startsWith("video")){const v=document.createElement("video");v.src=u;v.loop=true;v.muted=true;v.playsInline=true;v.preload="auto";v.onloadeddata=()=>{media[k].push({type:"v",el:v,file:f});done&&done()}}else{const im=new Image();im.onload=()=>{media[k].push({type:"i",el:im,file:f});done&&done()};im.src=u}}
@@ -1086,12 +1142,25 @@ $("#bAll").onclick=()=>runExport(items.map((_,i)=>i));
 $("#xCancel").onclick=()=>{xCancel=true};
 
 /* ---------- தொகுப்பு வீடியோ: பல செய்திகள் → ஒரே MP4 (≤180 வினாடி) ---------- */
-function comboFill(){$("#gCombo").checked=!!G.combo;$("#gFrom").value=G.cFrom||1;comboInfo()}
-function comboInfo(){const el=$("#cInfo");if(!el)return;const R=comboRange(),n=items.length,f=x=>Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0");
-  el.textContent="இந்த வீடியோவில்: செய்தி "+(R.a+1)+(R.b>R.a?" – "+(R.b+1):"")+" · மொத்தம் "+f(R.tot)+" ("+Math.round(R.tot)+" வினாடி / 180)"+(R.b<n-1?" · மீதி செய்திகள் அடுத்த part-ல்: தொடக்க எண் "+(R.b+2)+" என்று கொடுக்கவும்.":" · எல்லா செய்திகளும் அடங்கும்.")}
-$("#gCombo").onchange=e=>{G.combo=e.target.checked;save();comboInfo()};
-$("#gFrom").onchange=e=>{G.cFrom=clamp(Math.round(+e.target.value||1),1,Math.max(1,items.length));e.target.value=G.cFrom;save();comboInfo()};
-$("#bTpl").onclick=()=>{const it=items[cur];G.tpl={breaking:!!it.breaking,promo:it.promo||"",len:+it.len||30};save();xMsg("✔ இந்த அமைப்பு (நீளம் "+G.tpl.len+" வி, BREAKING "+(G.tpl.breaking?"ஆம்":"இல்லை")+") இயல்பு அமைப்பாகச் சேமிக்கப்பட்டது.")};
+function comboFill(){const q=$("#gDurQuick");if(q)q.value=G.dur||180;comboInfo()}
+function comboInfo(){const el=$("#cInfo");if(!el)return;const it=items[cur],D=durOf(it),n=getCues(it).length,f=x=>Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0");
+  el.textContent="ஒரே வீடியோ "+f(D)+" ("+Math.round(D)+" வினாடி) · மாற்றப் புள்ளிகள்: "+n+"/10. ஒவ்வொரு புள்ளியிலும் புரோமோ + தலைப்பு + caption அமைக்கலாம்."}
+if($("#gCombo"))$("#gCombo").onchange=e=>{G.combo=e.target.checked;save();comboInfo()};
+if($("#gFrom"))$("#gFrom").onchange=e=>{G.cFrom=clamp(Math.round(+e.target.value||1),1,Math.max(1,items.length));e.target.value=G.cFrom;save();comboInfo()};
+if($("#gDurQuick"))$("#gDurQuick").onchange=e=>{G.dur=clamp(+e.target.value||180,30,180);e.target.value=G.dur;const gd=$("#gDur");if(gd)gd.value=G.dur;save();comboInfo();render(true)};
+/* 10 மாற்றப் புள்ளிகள் — ஒரே 180 வினாடி வீடியோவில் சம இடைவெளி */
+$("#bFit10").onclick=()=>{
+  G.combo=false;G.dur=180;G.prOn=true;G.prDur=G.prDur||3;G.prEvery=18;
+  const it=items[cur],D=180,n=10,step=D/n;
+  const cues=[];
+  for(let i=0;i<n;i++){
+    const t=r1(i*step);
+    cues.push({t,w:i===0?"@":(G.prDef||"BREAKING NEWS"),headline:i===0?(it.headline||""):"",script:i===0?(it.script||""):""});
+  }
+  setPins(it,cues);selT=0;save();fill();comboInfo();render(true);
+  xMsg("✔ 10 புள்ளிகள்: 0, 18, 36…162 வினாடி. ஒவ்வொன்றையும் தட்டி தலைப்பு + caption + புரோமோ சொல் மாற்றவும்.");
+};
+$("#bTpl").onclick=()=>{const it=items[cur];G.tpl={breaking:!!it.breaking,promo:it.promo||"",len:180};save();xMsg("✔ இயல்பு அமைப்பு சேமிக்கப்பட்டது.")};
 $("#bTplRst").onclick=()=>{Object.assign(items[cur],tplSt());save();fill();syncAdj();xMsg("✔ இந்தச் செய்தியின் அமைப்பு இயல்புக்கு மாற்றப்பட்டது (எழுத்து மாறவில்லை).")};
 $("#bCP").onclick=()=>{
   if(window._cp){window._cp=false;$("#bCP").textContent="▶ தொகுப்பு முன்னோட்டம்";return}
@@ -1218,43 +1287,48 @@ const fmt=x=>Math.floor(x/60)+":"+String(Math.floor(x%60)).padStart(2,"0");
 const r1=x=>Math.round(x*10)/10;
 const parseT=v=>{v=String(v||"").trim();const m=v.match(/^(\d+):(\d{1,2}(?:\.\d+)?)$/);if(m)return +m[1]*60+(+m[2]);const n=parseFloat(v);return isFinite(n)&&n>=0?n:null};
 const DU=()=>clamp(+G.prDur||4,2,10);
-const Dmax=it=>durOf(it)-(G.combo&&lastSeg(it)?EC:0);
+const Dmax=it=>Math.max(0,durOf(it)-DU());
 const tokens=it=>(it.promo||"").trim()?it.promo.split("|").map(x=>x.trim()):[];
-const pins=it=>{const ts=promoTimes(it)||[],tk=tokens(it);return ts.map((t,k)=>({t,w:tk.length?(tk[k%tk.length]||"@"):"@"}))};
-function defaults(it){const D=Math.max(0,durOf(it)),du=DU();
-  if(G.combo){const S0=D-du-(lastSeg(it)?EC:0);return S0>=0?[S0]:[]}
-  const E=clamp(+G.prEvery||30,5,180),o=[];for(let q=1;q*E+du<=D;q++)o.push(q*E);return o}
+const pins=it=>getCues(it).filter(c=>c.t>0.05||(c.w&&c.w!=="@")||c.headline||c.script).length?getCues(it):getCues(it);
+function defaults(it){const D=Math.max(0,durOf(it)),du=DU(),E=clamp(+G.prEvery||18,5,180),o=[];
+  for(let q=0;q*E+du<=D&&o.length<10;q++)o.push(r1(q*E));return o.length?o:[0]}
 function setPins(it,P){
   P=P.slice().sort((a,b)=>a.t-b.t);const seen=new Set();
-  P=P.filter(p=>{const k=r1(p.t);if(seen.has(k))return false;seen.add(k);p.t=k;return true});
-  it.promoAt=P.map(p=>Number.isInteger(p.t)?String(p.t):p.t.toFixed(1)).join(", ");
-  if(P.length){const anyW=P.some(p=>p.w&&p.w!=="@"),hadW=tokens(it).some(w=>w&&w!=="@");
-    it.promo=(anyW||hadW)?P.map(p=>p.w||"@").join(" | "):""}
+  P=P.filter(p=>{const k=r1(p.t);if(seen.has(k))return false;seen.add(k);p.t=k;p.w=p.w||"@";p.headline=p.headline||"";p.script=p.script||"";return true});
+  if(!P.length||P[0].t>0.05)P.unshift({t:0,w:"@",headline:it.headline||"",script:it.script||""});
+  if(P[0].t===0){if(P[0].headline)it.headline=P[0].headline;if(P[0].script)it.script=P[0].script}
+  it.cues=P;
+  it.promoAt=P.filter(p=>p.t>0.05).map(p=>Number.isInteger(p.t)?String(p.t):p.t.toFixed(1)).join(", ");
+  const anyW=P.some(p=>p.w&&p.w!=="@");it.promo=anyW?P.map(p=>p.w||"@").join(" | "):"";
   save();
-  const a=document.querySelector('[data-k="promoAt"]');if(a)a.value=it.promoAt;
+  const a=document.querySelector('[data-k="promoAt"]');if(a)a.value=it.promoAt||"";
   const b=document.querySelector('[data-k="promo"]');if(b)b.value=it.promo||"";
   if(typeof promoAtInfo==="function")promoAtInfo()}
 let selT=null,drag=null,sig="";
 const labelText=w=>(w&&w!=="@")?w:(G.prDef==null?"BREAKING NEWS":G.prDef);
 function signature(){const it=items[cur];
-  return [cur,G.combo?1:0,G.cFrom,G.prDur,G.prEvery,G.prDef,G.prOn,it.promoAt,it.promo,Math.round(durOf(it)*10),selT,items.map(x=>(+x.len||30)+"|"+(x.promoAt||"")+"|"+((x.script||"").length)).join(";")].join("~")}
+  return [cur,G.dur,G.prDur,G.prEvery,G.prDef,G.prOn,JSON.stringify(it.cues||[]),it.promoAt,it.promo,Math.round(durOf(it)*10),selT].join("~")}
 function render(force){
   const sg=signature();if(!force&&sg===sig)return;sig=sg;
-  const it=items[cur],D=Math.max(1,durOf(it)),du=DU(),P=pins(it),ghost=!P.length,list=ghost?defaults(it).map(t=>({t,w:"@"})):P;
+  const it=items[cur],D=Math.max(1,durOf(it)),du=DU(),P=getCues(it),list=P;
   trk.querySelectorAll(".tl-pin").forEach(e=>e.remove());
   list.forEach((p,k)=>{const e=document.createElement("div");
-    e.className="tl-pin"+(ghost?" ghost":"")+(!ghost&&selT!=null&&Math.abs(p.t-selT)<.05?" on":"")+(p.t+du>Dmax(it)+.01?" bad":"");
-    e.style.left=(p.t/D*100)+"%";e.style.width="max("+(du/D*100)+"%,34px)";e.dataset.k=k;e.title=fmt(p.t);
-    e.textContent=labelText(p.w)||"●";trk.insertBefore(e,head)});
-  /* எல்லாச் செய்திகளின் மேலோட்டம் */
-  const R=G.combo?comboRange():null;all.innerHTML="";
-  items.forEach((x,i)=>{const b=document.createElement("button");b.type="button";
-    b.className="tl-blk"+(i===cur?" on":"")+(R&&(i<R.a||i>R.b)?" off":"");b.style.flexGrow=Math.max(6,durOf(x));b.textContent=i+1;
-    const Dx=Math.max(1,durOf(x));(promoTimes(x)||defaults(x)).forEach(t=>{const m=document.createElement("i");m.style.left=Math.min(97,t/Dx*100)+"%";b.appendChild(m)});
-    b.onclick=()=>sel(i);all.appendChild(b)});
+    e.className="tl-pin"+(selT!=null&&Math.abs(p.t-selT)<.05?" on":"")+(p.t+du>Dmax(it)+.01?" bad":"");
+    e.style.left=(p.t/D*100)+"%";e.style.width="max("+(du/D*100)+"%,34px)";e.dataset.k=k;e.title=fmt(p.t)+(p.headline?" · "+p.headline.slice(0,20):"");
+    e.textContent=labelText(p.w)||(k+1);trk.insertBefore(e,head)});
+  /* புள்ளி மேலோட்டம் */
+  all.innerHTML="";
+  list.forEach((x,i)=>{const b=document.createElement("button");b.type="button";
+    b.className="tl-blk"+(selT!=null&&Math.abs(x.t-selT)<.05?" on":"");b.style.flexGrow=Math.max(6,1);
+    b.textContent=(i+1);b.title=fmt(x.t);b.onclick=()=>{selT=x.t;render(true);seek(x.t)};all.appendChild(b)});
   /* பாப்-அப் எடிட்டர் */
   const k=selT==null?-1:P.findIndex(p=>Math.abs(p.t-selT)<.05);
-  if(k<0){pop.hidden=true}else{pop.hidden=false;if(document.activeElement!==$("#tpT"))$("#tpT").value=fmt1(P[k].t);if(document.activeElement!==$("#tpW")){$("#tpW").value=(P[k].w&&P[k].w!=="@")?P[k].w:"";$("#tpW").placeholder=labelText("@")}}
+  if(k<0){pop.hidden=true}else{pop.hidden=false;
+    if(document.activeElement!==$("#tpT"))$("#tpT").value=fmt1(P[k].t);
+    if(document.activeElement!==$("#tpW")){$("#tpW").value=(P[k].w&&P[k].w!=="@")?P[k].w:"";$("#tpW").placeholder=labelText("@")}
+    if($("#tpH")&&document.activeElement!==$("#tpH"))$("#tpH").value=P[k].headline||"";
+    if($("#tpS")&&document.activeElement!==$("#tpS"))$("#tpS").value=P[k].script||"";
+  }
 }
 function fmt1(x){const m=Math.floor(x/60),s=r1(x-m*60);return m?m+":"+(s<10?"0":"")+s:String(s)}
 const timeAt=e=>{const r=trk.getBoundingClientRect(),D=Math.max(1,durOf(items[cur]));return clamp((e.clientX-r.left)/r.width,0,1)*D};
@@ -1263,35 +1337,37 @@ function playFrom(T){window._cp=false;window._scrub=null;playing=true;$("#bPlay"
 function idx(P){return selT==null?-1:P.findIndex(p=>Math.abs(p.t-selT)<.05)}
 trk.addEventListener("pointerdown",e=>{
   const pin=e.target.closest(".tl-pin");try{trk.setPointerCapture(e.pointerId)}catch(x){}
-  if(pin&&!pin.classList.contains("ghost")){const P=pins(items[cur]),k=+pin.dataset.k;drag={k,p:P[k],P,moved:false,x0:e.clientX,off:timeAt(e)-P[k].t}}
-  else if(pin){drag={ghost:true,k:+pin.dataset.k,x0:e.clientX}}
+  if(pin){const P=getCues(items[cur]),k=+pin.dataset.k;if(!P[k])return;drag={k,p:P[k],P,moved:false,x0:e.clientX,off:timeAt(e)-P[k].t};selT=P[k].t;render(true)}
   else{drag={scrub:true};seek(timeAt(e))}});
 trk.addEventListener("pointermove",e=>{if(!drag)return;
   if(drag.scrub){seek(timeAt(e));return}
-  if(Math.abs(e.clientX-drag.x0)>4)drag.moved=true;if(!drag.moved||drag.ghost)return;
-  const it=items[cur],t=clamp(timeAt(e)-drag.off,0,Math.max(0,Dmax(it)-DU()));
+  if(Math.abs(e.clientX-drag.x0)>4)drag.moved=true;if(!drag.moved)return;
+  const it=items[cur],t=clamp(timeAt(e)-drag.off,0,Math.max(0,Dmax(it)));
   drag.p.t=r1(t);selT=drag.p.t;setPins(it,drag.P);selT=drag.p.t;render(true)});
-const endDrag=e=>{if(!drag)return;const d=drag;drag=null;if(d.scrub)return;const it=items[cur];
-  if(d.ghost){const dl=defaults(it);if(!dl.length)return;setPins(it,dl.map(t=>({t:r1(t),w:"@"})));selT=r1(dl[d.k]);render(true);playFrom(selT-.6);return}
-  selT=d.p.t;render(true);playFrom(selT-.6)};
+const endDrag=e=>{if(!drag)return;const d=drag;drag=null;if(d.scrub)return;
+  selT=d.p.t;render(true);playFrom(Math.max(0,selT-.3))};
 trk.addEventListener("pointerup",endDrag);trk.addEventListener("pointercancel",()=>{drag=null});
-$("#tlAdd").onclick=()=>{const it=items[cur];if(Dmax(it)<DU()){$("#st").textContent="இந்தச் செய்தியின் நீளம் புரோமோவுக்குப் போதாது — நீளத்தை அதிகரிக்கவும்.";return}
-  const t=r1(clamp(window._pt||0,0,Math.max(0,Dmax(it)-DU()))),P=pins(it);P.push({t,w:"@"});setPins(it,P);selT=t;render(true);playFrom(t-.6);
-  $("#st").textContent="✔ "+fmt(t)+" நேரத்தில் புரோமோ வைக்கப்பட்டது — அது பாப்-அப் ஆவதைப் பாருங்கள்."};
+$("#tlAdd").onclick=()=>{const it=items[cur],P=getCues(it);
+  if(P.length>=10){$("#st").textContent="அதிகபட்சம் 10 மாற்றப் புள்ளிகள்.";return}
+  const t=r1(clamp(window._pt||0,0,Math.max(0,Dmax(it))));
+  P.push({t,w:G.prDef||"BREAKING NEWS",headline:"",script:""});setPins(it,P);selT=t;render(true);playFrom(Math.max(0,t-.3));
+  $("#st").textContent="✔ "+fmt(t)+" — புரோமோ / தலைப்பு / caption இங்கே மாற்றவும்."};
 $("#tlPlay").onclick=()=>$("#bPlay").click();
-$("#tpT").onchange=e=>{const it=items[cur],P=pins(it),k=idx(P);if(k<0)return;const v=parseT(e.target.value);if(v==null){render(true);return}
-  P[k].t=r1(clamp(v,0,Math.max(0,Dmax(it)-DU())));selT=P[k].t;setPins(it,P);selT=P[k].t;render(true);playFrom(selT-.6)};
-$("#tpW").oninput=e=>{const it=items[cur],P=pins(it),k=idx(P);if(k<0)return;P[k].w=e.target.value.trim()||"@";setPins(it,P);sig=""};
-$("#tpGo").onclick=()=>{if(selT!=null)playFrom(selT-.6)};
-$("#tpDel").onclick=()=>{const it=items[cur],P=pins(it),k=idx(P);if(k<0)return;P.splice(k,1);
-  if(P.length)setPins(it,P);else{it.promoAt="";save();const a=document.querySelector('[data-k="promoAt"]');if(a)a.value="";if(typeof promoAtInfo==="function")promoAtInfo()}
-  selT=null;render(true)};
+$("#tpT").onchange=e=>{const it=items[cur],P=getCues(it),k=idx(P);if(k<0)return;const v=parseT(e.target.value);if(v==null){render(true);return}
+  P[k].t=r1(clamp(v,0,Math.max(0,Dmax(it))));selT=P[k].t;setPins(it,P);selT=P[k].t;render(true);playFrom(Math.max(0,selT-.3))};
+$("#tpW").oninput=e=>{const it=items[cur],P=getCues(it),k=idx(P);if(k<0)return;P[k].w=e.target.value.trim()||"@";setPins(it,P);sig=""};
+if($("#tpH"))$("#tpH").oninput=e=>{const it=items[cur],P=getCues(it),k=idx(P);if(k<0)return;P[k].headline=e.target.value;if(P[k].t===0)it.headline=e.target.value;setPins(it,P);sig=""};
+if($("#tpS"))$("#tpS").oninput=e=>{const it=items[cur],P=getCues(it),k=idx(P);if(k<0)return;P[k].script=e.target.value;if(P[k].t===0)it.script=e.target.value;setPins(it,P);sig=""};
+$("#tpGo").onclick=()=>{if(selT!=null)playFrom(Math.max(0,selT-.3))};
+$("#tpDel").onclick=()=>{const it=items[cur],P=getCues(it),k=idx(P);if(k<0)return;if(P[k].t===0&&P.length===1)return;
+  P.splice(k,1);if(!P.length)P.push({t:0,w:"@",headline:it.headline||"",script:it.script||""});
+  setPins(it,P);selT=null;render(true)};
 $("#tpOk").onclick=()=>{selT=null;render(true)};
 /* எடிட்டர் மேலே இருக்கும்போது செய்தி மாறினால் பாப்-அப் மூடும் */
 let lastCur=-1;
 (function loop(){const it=items[cur];if(cur!==lastCur){lastCur=cur;selT=null}
   const D=Math.max(1,durOf(it)),t=clamp(window._pt||0,0,D);head.style.left=(t/D*100)+"%";
-  tT.textContent=fmt(t)+" / "+fmt(D)+(G.combo?"  ·  தொகுப்பு "+fmt(comboRange().tot)+" / 3:00":"");
+  tT.textContent=fmt(t)+" / "+fmt(D)+"  ·  "+getCues(it).length+"/10 புள்ளிகள்";
   $("#tlPlay").textContent=playing?"⏸":"▶";
   render(false);requestAnimationFrame(loop)})();
 render(true);window.labelFill();
