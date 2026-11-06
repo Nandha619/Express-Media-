@@ -1,2 +1,2 @@
-# Blue-Magic-
+# Media-Studio-
 Dialogue Tamil 
