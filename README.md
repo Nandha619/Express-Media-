@@ -1,16 +1,5 @@
 # NEWS STUDIO (Royal-Red)
 
-## 2026-11 புதுப்பிப்பு · CapCut பாணி + World-class Premium Design
-- Design system: soft depth shadows, gradient CTAs, refined focus rings, micro-animations
-- Studio: premium stage frame, chromo hero panel, gesture-first zoom
-- Settings: polished cards, toast, nav, theme switcher
-- **குரோமோ நேரம்**: Timeline scrub + “இந்த நேரத்தில் குரோமோ சேர்” — நீங்களே எந்த வினாடியில் வர வேண்டும் என்று முடிவு செய்யலாம்.
-- **ஜூம் / நிலை**: Preview-ல் டச்/இழுத்து செய்யுங்கள் (ஸ்லைடர் மேம்பட்ட பிரிவில் மறைக்கப்பட்டது).
-- **Settings எளிமை**: முக்கிய செயல்கள் ஹைலைட் · அரிதானவை `<details>`-ல் · Articles+Shopping+Events ஒரே ஒப்புதல் மையம்.
-- Mobile / Desktop இரு layouts (கீழ்ப்பட்டை vs இடப்பக்க மெனு).
-- News 7 பாணி premium animation கருத்து அப்படியே.
-
-
 Theekkathir channel broadcasting tool — E-Paper, Mobile TV news studio, Book studio.
 
 ## இரண்டு பக்கங்கள்
@@ -44,6 +33,7 @@ Host the folder as a static site / PWA and open `index.html`.
 - `articles.js` / `articles.css` — Articles: எழுத்தாளர் அலமாரி, பழங்காலத் தாள் வாசிப்பு, எழுதும் படிவம்
 - `article-store.js` — Articles சேமிப்பு (Firebase Firestore REST / சோதனை முறை)
 - `articles-config.js` — Firebase அமைப்பு (3 மதிப்புகள்)
+- `articles-admin.js` — செட்டிங்ஸ் → Articles (அட்மின் ஒப்புதல்)
 - `cutout.js` — புகைப்படப் பின்னணி நீக்கம் (உருவம் மட்டும் PNG)
 - `sw.js` — service worker
 
@@ -97,17 +87,3 @@ service cloud.firestore {
 - அட்மின்: `settings.html`-ஐ நேரடியாகத் திறந்து உள்நுழையவும் (இணைப்பைப் பிறரிடம் பகிர வேண்டாம்). பிறகு அந்தச் சாதனத்தில் முதல் பக்கத்திலும் செட்டிங்ஸ் பொத்தான் வரும்.
 - செட்டிங்ஸ் → 📣 பகிர்: ஒரே இடத்தில் எழுதி இணையதளம் + Meta Business Suite (Facebook/Instagram) + WhatsApp.
 - **இன்னும் சாதனத்தில் மட்டும்:** E-Paper PDF, Mobile TV செய்திகள், Book Shelf தரவு — இவற்றைப் பொதுமக்கள் காண cloud-ல் சேமிக்கும் அடுத்த கட்டம் தேவை.
-
-
-## புதிய செட்டிங்ஸ் அமைப்பு (v2) — 5 பகுதிகள் மட்டும்
-`settings.html` இப்போது ஒரே மையம். **மொபைல்** (கீழ்ப்பட்டை) மற்றும் **கணினி** (இடப்பக்க மெனு) என இரு தோற்றம்; மேலே உள்ள பொத்தானால் தானாக / மொபைல் / கணினி மாற்றலாம்.
-
-| பகுதி | உள்ளடக்கம் |
-| --- | --- |
-| 🏠 மையம் | காத்திருக்கும் ஒப்புதல் எண்ணிக்கை, இன்றைய இதழ் நிலை, விரைவுச் செயல்கள் |
-| ✅ ஒப்புதல் | Articles + Shopping + Events **ஒரே பட்டியல்** — ஏற்று / நிராகரி / நீக்கு / அனைத்தையும் ஏற்று; ஒருமுறை மட்டுமே அட்மின் உள்நுழைவு |
-| 📣 வெளியீடு | E-Paper PDF, தேதி, ஒலி + இணையதளம் / Meta / WhatsApp பகிர்வு |
-| 🎬 ஸ்டுடியோ | Mobile TV · புத்தக வீடியோ (மேம்பட்ட புலங்கள் மடிக்கப்பட்டிருக்கும்) |
-| ⚙ அமைப்பு | **சேனல் அடையாளம்** (பெயர், முழக்கம், எண், இணையம், Instagram, hashtag, லோகோ) — ஒருமுறை சேமித்தால் Mobile TV + புத்தக வீடியோ இரண்டிலும் பொருந்தும்; ஆப் தோற்றம்; பகுதிப் பெயர்கள்; திரை முறை |
-
-பழைய இணைப்புகள் (`#epaper`, `#tv`, `#shelf`, `#articles`, `#shopping`, `#events`, `#sections`) தொடர்ந்து வேலை செய்யும்.
